@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # simple script for android devices operation
-# author: chandra.c
+# author: chandra.c(binilinlquad), ade.imam(geekzy)
 
 function choose_device
 {
@@ -30,14 +30,19 @@ function choose_device
 
     #set device
     DEVICE="${DEVICES[$idx]}"
+    echo
 }
 
 function choose_command
 {
     # let user choose what do they want to do
     # for now just one. You can add more command
-    echo "Select command warm-restart(w), push(p), logcat(l)"
-    echo "choose-device(c),quit(q)"
+    echo "Select command"
+    echo "w) warm-restart"
+    echo "p) push"
+    echo "l) logcat"
+    echo "c) choose-device"
+    echo "q) quit"
     read COM
     case $COM in 
         w)
