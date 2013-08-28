@@ -19,7 +19,7 @@ function choose_device
     
     # ask user to choose its device
     if [ "$i" -gt 1 ]; then
-        echo "Select your device:"
+        printf "Select your device: "
         read idx
     elif [ "$i" -eq 1 ]; then
        idx=0
@@ -80,9 +80,26 @@ function logcat_by_tag
 {
     echo "Specify TAG"
     read tag
+
+    # trap CTRL+C is pressed
+    trap script_break SIGINT
+
     adb -s $DEVICE logcat $tag:V *:S
+    PID_LOG=$!
 }
 
+function stop_logcat
+{
+    kill $PID_LOG
+}
+
+# Function invoked after CTRL+C signalc was caught - to make clean exit and prevent zombies.
+#
+function script_break(){
+    stop_logcat
+}
+
+# main 
 choose_device
 while [ true ]; do
     choose_command
